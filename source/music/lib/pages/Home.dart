@@ -4,6 +4,10 @@ import 'package:flutter/gestures.dart';
 import "package:flutter/material.dart";
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
+import 'package:music/pages/subHomePages/Liberaries.dart';
+import 'package:music/pages/subHomePages/home.dart';
+import 'package:music/pages/subHomePages/menu.dart';
+import 'package:music/pages/subHomePages/search.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -13,7 +17,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   int selectedNavIcon = 1;
   bool isPaused = true;
 
@@ -30,410 +33,17 @@ class _HomePageState extends State<HomePage> {
                 "https://assets6.lottiefiles.com/packages/lf20_xsxuytsf.json",
                 fit: BoxFit.fill),
           ),
-          SingleChildScrollView(
-            dragStartBehavior: DragStartBehavior.down,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: 24,
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        "Top 2022",
-                        style: GoogleFonts.montserrat(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.blue),
-                      ),
-                      Spacer(),
-                      Container(
-                        width: 48,
-                        height: 48,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Lottie.network(
-                            "https://assets4.lottiefiles.com/private_files/lf30_tvnnnk4i.json"),
-                      ),
-                    ],
-                  ),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                              height: 24,
-                            ),
-                            Container(
-                              width: 150,
-                              height: 150,
-                              decoration: BoxDecoration(
-                                boxShadow: [
-                                  BoxShadow(
-                                      color: Color.fromARGB(88, 158, 158, 158),
-                                      blurRadius: 6,
-                                      offset: Offset(2, 3),
-                                      spreadRadius: 0),
-                                ],
-                                color: Colors.white,
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(36),
-                                  topRight: Radius.circular(8),
-                                  bottomRight: Radius.circular(36),
-                                  bottomLeft: Radius.circular(8),
-                                ),
-                              ),
-                            ),
-                            Text(
-                              "Song Title",
-                              textAlign: TextAlign.start,
-                              style: GoogleFonts.sourceSansPro(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                              ),
-                            ),
-                            Text(
-                              "Artist",
-                              textAlign: TextAlign.start,
-                              style: GoogleFonts.firaSans(
-                                color: Colors.grey,
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          width: 16,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                              height: 24,
-                            ),
-                            Container(
-                              width: 150,
-                              height: 150,
-                              decoration: BoxDecoration(
-                                boxShadow: [
-                                  BoxShadow(
-                                      color: Color.fromARGB(88, 158, 158, 158),
-                                      blurRadius: 6,
-                                      offset: Offset(2, 3),
-                                      spreadRadius: 0),
-                                ],
-                                color: Colors.white,
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(36),
-                                  topRight: Radius.circular(8),
-                                  bottomRight: Radius.circular(36),
-                                  bottomLeft: Radius.circular(8),
-                                ),
-                              ),
-                            ),
-                            Text(
-                              "Song Title",
-                              textAlign: TextAlign.start,
-                              style: GoogleFonts.sourceSansPro(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                              ),
-                            ),
-                            Text(
-                              "Artist",
-                              textAlign: TextAlign.start,
-                              style: GoogleFonts.firaSans(
-                                color: Colors.grey,
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          width: 16,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                              height: 24,
-                            ),
-                            Container(
-                              width: 150,
-                              height: 150,
-                              decoration: BoxDecoration(
-                                boxShadow: [
-                                  BoxShadow(
-                                      color: Color.fromARGB(88, 158, 158, 158),
-                                      blurRadius: 6,
-                                      offset: Offset(2, 3),
-                                      spreadRadius: 0),
-                                ],
-                                color: Colors.white,
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(36),
-                                  topRight: Radius.circular(8),
-                                  bottomRight: Radius.circular(36),
-                                  bottomLeft: Radius.circular(8),
-                                ),
-                              ),
-                            ),
-                            Text(
-                              "Song Title",
-                              textAlign: TextAlign.start,
-                              style: GoogleFonts.sourceSansPro(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                              ),
-                            ),
-                            Text(
-                              "Artist",
-                              textAlign: TextAlign.start,
-                              style: GoogleFonts.firaSans(
-                                color: Colors.grey,
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 16,
-                  ),
-                  Text(
-                    "Recommendation",
-                    style: GoogleFonts.montserrat(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.blue),
-                    textAlign: TextAlign.start,
-                  ),
-                  SingleChildScrollView(
-                    child: Container(
-                      width: diaplay.width,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Column(
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    height: 24,
-                                  ),
-                                  Container(
-                                    width: (diaplay.width / 2) - 24,
-                                    height: 300,
-                                    decoration: BoxDecoration(
-                                      boxShadow: const [
-                                        BoxShadow(
-                                            color: Color.fromARGB(
-                                                88, 158, 158, 158),
-                                            blurRadius: 6,
-                                            offset: Offset(2, 3),
-                                            spreadRadius: 0),
-                                      ],
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(36),
-                                        topRight: Radius.circular(8),
-                                        bottomRight: Radius.circular(36),
-                                        bottomLeft: Radius.circular(8),
-                                      ),
-                                    ),
-                                  ),
-                                  Text(
-                                    "Song Title",
-                                    textAlign: TextAlign.start,
-                                    style: GoogleFonts.sourceSansPro(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                  Text(
-                                    "Artist",
-                                    textAlign: TextAlign.start,
-                                    style: GoogleFonts.firaSans(
-                                      color: Colors.grey,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 24,
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    height: 4,
-                                  ),
-                                  Container(
-                                    width: (diaplay.width / 2) - 24,
-                                    height: 200,
-                                    decoration: BoxDecoration(
-                                      boxShadow: [
-                                        BoxShadow(
-                                            color: Color.fromARGB(
-                                                88, 158, 158, 158),
-                                            blurRadius: 6,
-                                            offset: Offset(2, 3),
-                                            spreadRadius: 0),
-                                      ],
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(36),
-                                        topRight: Radius.circular(8),
-                                        bottomRight: Radius.circular(36),
-                                        bottomLeft: Radius.circular(8),
-                                      ),
-                                    ),
-                                  ),
-                                  Text(
-                                    "Song Title",
-                                    textAlign: TextAlign.start,
-                                    style: GoogleFonts.sourceSansPro(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                  Text(
-                                    "Artist",
-                                    textAlign: TextAlign.start,
-                                    style: GoogleFonts.firaSans(
-                                      color: Colors.grey,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    height: 24,
-                                  ),
-                                  Container(
-                                    width: (diaplay.width / 2) - 24,
-                                    height: 200,
-                                    decoration: BoxDecoration(
-                                      boxShadow: [
-                                        BoxShadow(
-                                            color: Color.fromARGB(
-                                                88, 158, 158, 158),
-                                            blurRadius: 6,
-                                            offset: Offset(2, 3),
-                                            spreadRadius: 0),
-                                      ],
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(36),
-                                        topRight: Radius.circular(8),
-                                        bottomRight: Radius.circular(36),
-                                        bottomLeft: Radius.circular(8),
-                                      ),
-                                    ),
-                                  ),
-                                  Text(
-                                    "Song Title",
-                                    textAlign: TextAlign.start,
-                                    style: GoogleFonts.sourceSansPro(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                  Text(
-                                    "Artist",
-                                    textAlign: TextAlign.start,
-                                    style: GoogleFonts.firaSans(
-                                      color: Colors.grey,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 24,
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    height: 4,
-                                  ),
-                                  Container(
-                                    width: (diaplay.width / 2) - 24,
-                                    height: 300,
-                                    decoration: BoxDecoration(
-                                      boxShadow: [
-                                        BoxShadow(
-                                            color: Color.fromARGB(
-                                                88, 158, 158, 158),
-                                            blurRadius: 6,
-                                            offset: Offset(2, 3),
-                                            spreadRadius: 0),
-                                      ],
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(36),
-                                        topRight: Radius.circular(8),
-                                        bottomRight: Radius.circular(36),
-                                        bottomLeft: Radius.circular(8),
-                                      ),
-                                    ),
-                                  ),
-                                  Text(
-                                    "Song Title",
-                                    textAlign: TextAlign.start,
-                                    style: GoogleFonts.sourceSansPro(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                  Text(
-                                    "Artist",
-                                    textAlign: TextAlign.start,
-                                    style: GoogleFonts.firaSans(
-                                      color: Colors.grey,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
+          //Sub Pages Here - Start
+
+          selectedNavIcon == 1
+              ? SubHomeScreen()
+              : selectedNavIcon == 2
+                  ? SubSearchPage()
+                  : selectedNavIcon == 3
+                      ? SubLiberariesPage()
+                      : SubMenuPage(),
+
+          //Sub Pages Here - End
           Column(
             children: [
               Spacer(),
@@ -501,7 +111,7 @@ class _HomePageState extends State<HomePage> {
                       child: Container(
                         padding: EdgeInsets.all(4),
                         child: Icon(
-                          isPaused? Icons.pause: Icons.play_arrow,
+                          isPaused ? Icons.pause : Icons.play_arrow,
                           size: 32,
                         ),
                       ),
@@ -534,64 +144,72 @@ class _HomePageState extends State<HomePage> {
                     InkWell(
                       onTap: () {
                         setState(() {
-                          selectedNavIcon =1;
+                          selectedNavIcon = 1;
                         });
                       },
                       child: Container(
                         padding: EdgeInsets.all(12),
                         child: Icon(
                           Icons.home,
-                          size:selectedNavIcon ==1 ?32:24,
-                        color: Colors.white,
-                        shadows:selectedNavIcon ==1? [Shadow(color: Colors.white,blurRadius: 6)] : [],
+                          size: selectedNavIcon == 1 ? 32 : 24,
+                          color: Colors.white,
+                          shadows: selectedNavIcon == 1
+                              ? [Shadow(color: Colors.white, blurRadius: 6)]
+                              : [],
                         ),
                       ),
                     ),
                     InkWell(
                       onTap: () {
-                         setState(() {
-                          selectedNavIcon =2;
+                        setState(() {
+                          selectedNavIcon = 2;
                         });
                       },
                       child: Container(
                         padding: EdgeInsets.all(12),
                         child: Icon(
                           Icons.search,
-                          size:selectedNavIcon ==2 ?32:24,
+                          size: selectedNavIcon == 2 ? 32 : 24,
                           color: Colors.white,
-                          shadows:selectedNavIcon ==2? [Shadow(color: Colors.white,blurRadius: 6)] : [],
+                          shadows: selectedNavIcon == 2
+                              ? [Shadow(color: Colors.white, blurRadius: 6)]
+                              : [],
                         ),
                       ),
                     ),
                     InkWell(
                       onTap: () {
-                         setState(() {
-                          selectedNavIcon =3;
+                        setState(() {
+                          selectedNavIcon = 3;
                         });
                       },
                       child: Container(
                         padding: EdgeInsets.all(12),
                         child: Icon(
                           Icons.favorite,
-                          size:selectedNavIcon ==3 ?32:24,
+                          size: selectedNavIcon == 3 ? 32 : 24,
                           color: Colors.white,
-                          shadows:selectedNavIcon ==3? [Shadow(color: Colors.white,blurRadius: 6)] : [],
+                          shadows: selectedNavIcon == 3
+                              ? [Shadow(color: Colors.white, blurRadius: 6)]
+                              : [],
                         ),
                       ),
                     ),
                     InkWell(
                       onTap: () {
-                         setState(() {
-                          selectedNavIcon =4;
+                        setState(() {
+                          selectedNavIcon = 4;
                         });
                       },
                       child: Container(
                         padding: EdgeInsets.all(12),
                         child: Icon(
                           Icons.menu,
-                         size:selectedNavIcon ==4 ?32:24,
+                          size: selectedNavIcon == 4 ? 32 : 24,
                           color: Colors.white,
-                          shadows:selectedNavIcon ==4? [Shadow(color: Colors.white,blurRadius: 6)] : [],
+                          shadows: selectedNavIcon == 4
+                              ? [Shadow(color: Colors.white, blurRadius: 6)]
+                              : [],
                         ),
                       ),
                     ),
