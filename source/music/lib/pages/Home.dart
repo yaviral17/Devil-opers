@@ -13,6 +13,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+  int selectedNavIcon = 1;
+  bool isPaused = true;
+
   @override
   Widget build(BuildContext context) {
     var diaplay = MediaQuery.of(context).size;
@@ -479,12 +483,38 @@ class _HomePageState extends State<HomePage> {
                       ],
                     ),
                     Spacer(),
-                    Icon(
-                      Icons.skip_previous,
-                      size: 32,
+                    InkWell(
+                      child: Container(
+                        padding: EdgeInsets.all(4),
+                        child: Icon(
+                          Icons.skip_previous,
+                          size: 32,
+                        ),
+                      ),
                     ),
-                    Icon(Icons.play_arrow,size: 32,),
-                    Icon(Icons.skip_next,size: 32,),
+                    InkWell(
+                      onTap: () {
+                        setState(() {
+                          isPaused = !isPaused;
+                        });
+                      },
+                      child: Container(
+                        padding: EdgeInsets.all(4),
+                        child: Icon(
+                          isPaused? Icons.pause: Icons.play_arrow,
+                          size: 32,
+                        ),
+                      ),
+                    ),
+                    InkWell(
+                      child: Container(
+                        padding: EdgeInsets.all(4),
+                        child: Icon(
+                          Icons.skip_next,
+                          size: 32,
+                        ),
+                      ),
+                    ),
                     SizedBox(
                       width: 12,
                     ),
@@ -493,7 +523,7 @@ class _HomePageState extends State<HomePage> {
               ),
               Container(
                 padding: EdgeInsets.symmetric(
-                  horizontal: 12,
+                  horizontal: 32,
                 ),
                 width: diaplay.width,
                 height: 56,
@@ -501,10 +531,70 @@ class _HomePageState extends State<HomePage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Icon(Icons.home),
-                    Icon(Icons.home),
-                    Icon(Icons.home),
-                    Icon(Icons.home),
+                    InkWell(
+                      onTap: () {
+                        setState(() {
+                          selectedNavIcon =1;
+                        });
+                      },
+                      child: Container(
+                        padding: EdgeInsets.all(12),
+                        child: Icon(
+                          Icons.home,
+                          size:selectedNavIcon ==1 ?32:24,
+                        color: Colors.white,
+                        shadows:selectedNavIcon ==1? [Shadow(color: Colors.white,blurRadius: 6)] : [],
+                        ),
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                         setState(() {
+                          selectedNavIcon =2;
+                        });
+                      },
+                      child: Container(
+                        padding: EdgeInsets.all(12),
+                        child: Icon(
+                          Icons.search,
+                          size:selectedNavIcon ==2 ?32:24,
+                          color: Colors.white,
+                          shadows:selectedNavIcon ==2? [Shadow(color: Colors.white,blurRadius: 6)] : [],
+                        ),
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                         setState(() {
+                          selectedNavIcon =3;
+                        });
+                      },
+                      child: Container(
+                        padding: EdgeInsets.all(12),
+                        child: Icon(
+                          Icons.favorite,
+                          size:selectedNavIcon ==3 ?32:24,
+                          color: Colors.white,
+                          shadows:selectedNavIcon ==3? [Shadow(color: Colors.white,blurRadius: 6)] : [],
+                        ),
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                         setState(() {
+                          selectedNavIcon =4;
+                        });
+                      },
+                      child: Container(
+                        padding: EdgeInsets.all(12),
+                        child: Icon(
+                          Icons.menu,
+                         size:selectedNavIcon ==4 ?32:24,
+                          color: Colors.white,
+                          shadows:selectedNavIcon ==4? [Shadow(color: Colors.white,blurRadius: 6)] : [],
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               )
