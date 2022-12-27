@@ -1,6 +1,8 @@
 import "package:flutter/material.dart";
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
+import 'package:music/constrans/playList.dart';
+import 'package:music/constrans/songQueue.dart';
 
 class SubLiberariesPage extends StatefulWidget {
   const SubLiberariesPage({super.key});
@@ -10,20 +12,6 @@ class SubLiberariesPage extends StatefulWidget {
 }
 
 class _SubLiberariesPageState extends State<SubLiberariesPage> {
-  List userPlaylist = [
-    LiberaryWidgit(),
-    LiberaryWidgit(),
-    LiberaryWidgit(),
-    LiberaryWidgit(),
-    LiberaryWidgit(),
-    LiberaryWidgit(),
-    LiberaryWidgit(),
-    LiberaryWidgit(),
-    LiberaryWidgit(),
-    LiberaryWidgit(),
-    LiberaryWidgit(),
-    LiberaryWidgit(),
-  ];
   @override
   Widget build(BuildContext context) {
     var display = MediaQuery.of(context).size;
@@ -94,15 +82,23 @@ class _SubLiberariesPageState extends State<SubLiberariesPage> {
             child: Center(
               child: GridView.builder(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: display.width > 700? 4:2,
-                  crossAxisSpacing: display.width * (4/100),
+                  crossAxisCount: display.width > 700 ? 4 : 2,
+                  crossAxisSpacing: display.width * (4 / 100),
                   childAspectRatio: 1,
-                  mainAxisSpacing: display.width * (4/100),
+                  mainAxisSpacing: display.width * (4 / 100),
                 ),
-                itemCount: userPlaylist.length,
+                itemCount: userPlaylists.length,
                 itemBuilder: (context, index) {
-                  return 
-                  userPlaylist[index];
+                  return GestureDetector(
+                    onTap: () {
+                      currentQueue.clear() ;
+                      currentQueue.add(userPlaylists[index].songs);
+                    },
+                    child: LiberaryWidgit(
+                      title: userPlaylists[index].title,
+                      banner: userPlaylists[index].bannerImage.toString(),
+                    ),
+                  );
                 },
               ),
             ),
@@ -113,9 +109,16 @@ class _SubLiberariesPageState extends State<SubLiberariesPage> {
   }
 }
 
-class LiberaryWidgit extends StatelessWidget {
-  const LiberaryWidgit({super.key});
+class LiberaryWidgit extends StatefulWidget {
+  String title;
+  String banner;
+  LiberaryWidgit({super.key, required this.title, required this.banner});
 
+  @override
+  State<LiberaryWidgit> createState() => _LiberaryWidgitState();
+}
+
+class _LiberaryWidgitState extends State<LiberaryWidgit> {
   @override
   Widget build(BuildContext context) {
     var display = MediaQuery.of(context).size;
@@ -127,26 +130,37 @@ class LiberaryWidgit extends StatelessWidget {
       child: Stack(
         children: [
           Container(
-            height: display.height * (40/100),
-            child: Lottie.network('https://assets6.lottiefiles.com/packages/lf20_40wceiuk.json',) ),
+              height: display.height * (40 / 100),
+              child: ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: Lottie.network(
+                    'https://assets6.lottiefiles.com/packages/lf20_40wceiuk.json',
+                  ))),
           Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
                   // padding: EdgeInsets.only(bottom: display.width),
-                  width:  display.width>700?  display.width *(14/100) :display.width * (28/100),
-                  height:  display.width>700?  display.width *(14/100) :display.width * (28/100),
+                  width: display.width > 700
+                      ? display.width * (14 / 100)
+                      : display.width * (28 / 100),
+                  height: display.width > 700
+                      ? display.width * (14 / 100)
+                      : display.width * (28 / 100),
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8), color: Colors.white),
+                      borderRadius: BorderRadius.circular(8),
+                      color: Colors.white),
+                      child: ClipRRect(borderRadius: BorderRadius.circular(12),
+                      child: Image.network(widget.banner,fit: BoxFit.fill,),),
                 ),
                 SizedBox(
                   height: 8,
                 ),
                 Text(
-                  "Title",
+                  widget.title,
                   style: GoogleFonts.sourceSansPro(
-                    color: Colors.white ,
+                    color: Colors.white,
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
                   ),
@@ -154,7 +168,6 @@ class LiberaryWidgit extends StatelessWidget {
               ],
             ),
           ),
-          
         ],
       ),
     );

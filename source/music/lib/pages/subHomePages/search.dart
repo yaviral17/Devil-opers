@@ -1,7 +1,9 @@
+
 import "package:flutter/material.dart";
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:music/constrans/music_model.dart';
+import 'package:music/constrans/playList.dart';
 import 'package:music/constrans/songQueue.dart';
 import 'package:music/constrans/urls.dart';
 import 'package:music/constrans/utils.dart';
@@ -35,9 +37,9 @@ class _SubSearchPageState extends State<SubSearchPage> {
   Future getSearchResult(String searchthis) async {
     searchedResult.clear();
     print(searchthis);
-    Map<String,dynamic> response = await GetSearchResults(searchthis);
-    // List response = dummyResponse['data'];
-    print(response.keys);
+    // Map<String,dynamic> response = await GetSearchResults(searchthis);
+    Map<String, dynamic> response = dummyResponse;
+    // print(response.keys);
     if (response['isSuccess'] == true) {
       List data = response['data'];
       for (var item in data) {
@@ -52,7 +54,7 @@ class _SubSearchPageState extends State<SubSearchPage> {
         ));
       }
     }
-     setState(() {
+    setState(() {
       isSearched = true;
     });
   }
@@ -200,7 +202,7 @@ class SontTile extends StatefulWidget {
   String duration;
   int? index;
   int id;
-  MusicModel? model;
+  MusicModel model;
   SontTile(
       {super.key,
       required this.id,
@@ -211,7 +213,7 @@ class SontTile extends StatefulWidget {
       required this.artistImage,
       required this.duration,
       this.index,
-      this.model});
+      required this.model});
 
   @override
   State<SontTile> createState() => _SontTileState();
@@ -316,17 +318,145 @@ class _SontTileState extends State<SontTile> {
               Spacer(),
               Column(
                 children: [
-                  // InkWell(
-                  //   onTap: () {
+                  InkWell(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            actions: [
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    width: 200,
+                                    height: 200,
+                                    child: ListView.builder(
+                                      itemCount: userPlaylists.length,
+                                      itemBuilder: (context, index) {
+                                        return Column(
+                                          children: [
+                                            GestureDetector(
+                                              onTap: () {
+                                                userPlaylists[index].addSong(widget.model);
+                                                showSnackBar("Song added to ${userPlaylists[index].title}", context);
+                                                // Navigator.of(context).pop();
+                                              },
+                                              child: Container(
+                                                padding: EdgeInsets.all(12),
+                                                child: Text(
+                                                  userPlaylists[index].title,
+                                                  // "hi ther afad f adfe",
+                                                  style: TextStyle(fontSize: 24),
+                                                ),
+                                              ),
+                                            ),
+                                            Container(
+                                              height: 1,
+                                              color: Colors.grey,
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                  Center(
+                                    child: TextButton(
+                                      onPressed: () {
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            TextEditingController title =
+                                                TextEditingController();
+                                            TextEditingController disctription =
+                                                TextEditingController();
+                                            return AlertDialog(
+                                              actions: [
+                                                Column(
+                                                  // mainAxisAlignment: MainAxisAlignment.start,
+                                                  // crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      "Title:",
+                                                      textAlign:
+                                                          TextAlign.start,
+                                                    ),
+                                                    Padding(
+                                                      padding: const EdgeInsets
+                                                              .symmetric(
+                                                          horizontal: 44),
+                                                      child: TextField(
+                                                        controller: title,
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      height: 8,
+                                                    ),
+                                                    Text("Discription :"),
+                                                    Padding(
+                                                      padding: const EdgeInsets
+                                                              .symmetric(
+                                                          horizontal: 44),
+                                                      child: TextField(
+                                                        controller:
+                                                            disctription,
+                                                      ),
+                                                    ),
+                                                    TextButton(
+                                                        onPressed: () {
+                                                          if (title.text
+                                                              .trim()
+                                                              .isEmpty) {
+                                                            showSnackBar(
+                                                                "Title missing",
+                                                                context);
+                                                            return;
+                                                          }
+                                                          userPlaylists.add(
+                                                              PlaylistModel(
+                                                            title: title.text,
+                                                            bannerImage: widget
+                                                                .model
+                                                                .albumImage,
+                                                            disctription:
+                                                                disctription
+                                                                    .text,
+                                                          ));
+                                                          userPlaylists[
+                                                                  userPlaylists
+                                                                          .length -
+                                                                      1]
+                                                              .addSong(
+                                                                  widget.model);
+                                                                  Navigator.of(context).pop();
+                                                        },
+                                                        child: Text("Add")),
+                                                  ],
 
-                  //   },
-                  //   child: Container(
-                  //       padding: EdgeInsets.all(8),
-                  //       child: Icon(
-                  //         Icons.queue_music,
-                  //         color: Colors.white,
-                  //       )),
-                  // ),
+                                                )
+                                              ],
+                                            );
+                                          },
+                                        );
+                                    
+                                      },
+                                      child: Text("Create new"),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                    child: Container(
+                        padding: EdgeInsets.all(8),
+                        child: Icon(
+                          Icons.queue_music,
+                          color: Colors.white,
+                        )),
+                  ),
                   Spacer(),
                   GestureDetector(
                     onTap: () {

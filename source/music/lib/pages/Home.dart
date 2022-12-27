@@ -57,9 +57,7 @@ class _HomePageState extends State<HomePage> {
                 ? SubHomeScreen()
                 : selectedNavIcon == 2
                     ? SubSearchPage()
-                    : selectedNavIcon == 3
-                        ? SubLiberariesPage()
-                        : SubMenuPage(),
+                    : SubLiberariesPage(),
 
             //Sub Pages Here - End
             Column(
@@ -292,24 +290,6 @@ class _HomePageState extends State<HomePage> {
                             size: selectedNavIcon == 3 ? 32 : 24,
                             color: Colors.white,
                             shadows: selectedNavIcon == 3
-                                ? [Shadow(color: Colors.white, blurRadius: 6)]
-                                : [],
-                          ),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            selectedNavIcon = 4;
-                          });
-                        },
-                        child: Container(
-                          padding: EdgeInsets.all(12),
-                          child: Icon(
-                            Icons.menu,
-                            size: selectedNavIcon == 4 ? 32 : 24,
-                            color: Colors.white,
-                            shadows: selectedNavIcon == 4
                                 ? [Shadow(color: Colors.white, blurRadius: 6)]
                                 : [],
                           ),
