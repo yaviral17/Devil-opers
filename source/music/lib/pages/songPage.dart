@@ -151,7 +151,7 @@ class MusicPlayPageState extends State<MusicPlayPage> {
                       child: ClipRRect(
                           borderRadius: BorderRadius.circular(12),
                           child: Image.network(
-                              dummyResponse['data'][0]['album']['cover_big'])),
+                      currentQueue[currentMusic].albumImage)),
                     ),
                   ],
                 ),
@@ -169,7 +169,9 @@ class MusicPlayPageState extends State<MusicPlayPage> {
                   ),
                   Spacer(),
                   Text(
-                    "Night Changes",
+                    currentQueue[currentMusic].musicName.length > 30
+                        ? currentQueue[currentMusic].musicName.substring(0, 30)+'...'
+                        : currentQueue[currentMusic].musicName,
                     style: GoogleFonts.oxygen(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -238,7 +240,8 @@ class MusicPlayPageState extends State<MusicPlayPage> {
                       });
                       // return;
                     } else {
-                      await audioPlayer.play(currentQueue[currentMusic].musicUrl);
+                      await audioPlayer
+                          .play(currentQueue[currentMusic].musicUrl);
                       setState(() {
                         playing = true;
                       });

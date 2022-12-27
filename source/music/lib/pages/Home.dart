@@ -22,6 +22,22 @@ class _HomePageState extends State<HomePage> {
   int selectedNavIcon = 1;
 
   @override
+  void initState() {
+    // TODO: implement initState
+    audioPlayer.onDurationChanged.listen((Duration dd) {
+      setState(() {
+        audioDuration = dd;
+      });
+    });
+    audioPlayer.onAudioPositionChanged.listen((Duration dd) {
+      setState(() {
+        audioPosition = dd;
+      });
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     var diaplay = MediaQuery.of(context).size;
     return Material(
@@ -96,7 +112,7 @@ class _HomePageState extends State<HomePage> {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(4),
                           child: Image.network(
-                              currentQueue[currentMusic].artistimage),
+                              currentQueue[currentMusic].albumImage),
                         ),
                       ),
                       SizedBox(
@@ -107,7 +123,13 @@ class _HomePageState extends State<HomePage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            currentQueue[currentMusic].musicName,
+                            currentQueue[currentMusic].musicName.length > 20
+                                ? currentQueue[currentMusic]
+                                        .musicName
+                                        .toString()
+                                        .substring(0, 20) +
+                                    "..."
+                                : currentQueue[currentMusic].musicName,
                             style: GoogleFonts.sourceSansPro(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
@@ -143,10 +165,12 @@ class _HomePageState extends State<HomePage> {
                           // setState(() {
                           //   playing = true;
                           // });
-                          if(currentMusic != 0){
-                            currentMusic --;
-                            await audioPlayer.play(currentQueue[currentMusic].musicUrl);
-                             setState(() {
+                          if (currentMusic != 0) {
+                            currentMusic--;
+                            await audioPlayer
+                                .play(currentQueue[currentMusic].musicUrl);
+
+                            setState(() {
                               playing = true;
                             });
                           }
@@ -163,18 +187,18 @@ class _HomePageState extends State<HomePage> {
                         onTap: () async {
                           // var request = await GetSearchResults("night%20changes");
                           // print(request);
-                          if(!playing){
-                           await audioPlayer.play(currentQueue[currentMusic].musicUrl);
+                          if (!playing) {
+                            await audioPlayer
+                                .play(currentQueue[currentMusic].musicUrl);
                             setState(() {
                               playing = true;
                             });
-                          }else{
-                           await audioPlayer.pause();
+                          } else {
+                            await audioPlayer.pause();
                             setState(() {
                               playing = false;
                             });
                           }
-
                         },
                         child: Container(
                           padding: EdgeInsets.all(4),
@@ -186,13 +210,14 @@ class _HomePageState extends State<HomePage> {
                       ),
                       GestureDetector(
                         onTap: () async {
-                         if(currentMusic != currentQueue.length-1){
+                          if (currentMusic != currentQueue.length - 1) {
                             currentMusic++;
-                            await audioPlayer.play(currentQueue[currentMusic].musicUrl);
+                            await audioPlayer
+                                .play(currentQueue[currentMusic].musicUrl);
                             setState(() {
                               playing = true;
                             });
-                         }
+                          }
                         },
                         child: Container(
                           padding: EdgeInsets.all(4),

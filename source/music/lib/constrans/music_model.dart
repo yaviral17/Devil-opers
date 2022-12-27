@@ -5,7 +5,7 @@ class MusicModel {
   String musicName;
   String artishName;
   String albumName;
-  String id;
+  int id;
   MusicModel({
     required this.id,
     required this.albumImage,
