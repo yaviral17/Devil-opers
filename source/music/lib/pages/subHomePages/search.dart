@@ -1,6 +1,10 @@
 import "package:flutter/material.dart";
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
+import 'package:music/constrans/music_model.dart';
+import 'package:music/constrans/urls.dart';
+import 'package:music/constrans/utils.dart';
+import 'package:music/providers/fetchSearchedSongList.dart';
 
 class SubSearchPage extends StatefulWidget {
   const SubSearchPage({super.key});
@@ -12,17 +16,47 @@ class SubSearchPage extends StatefulWidget {
 class _SubSearchPageState extends State<SubSearchPage> {
   TextEditingController searchText = TextEditingController();
   bool isSearched = false;
-  List searchedResult = [
-    SontTile(),
-    SontTile(),
-    SontTile(),
-    SontTile(),
-    SontTile(),
-    SontTile(),
-    SontTile(),
-    SontTile(),
-    SontTile(),
+  List searchedResult = <MusicModel>[
+    MusicModel(
+      id: '0',
+      albumImage:
+          "https://e-cdns-images.dzcdn.net/images/artist/6760dba71ba14145eec5478d8b135c55/500x500-000000-80-0-0.jpg",
+      artishName: "One Direction",
+      artistimage:
+          "https://e-cdns-images.dzcdn.net/images/artist/6760dba71ba14145eec5478d8b135c55/500x500-000000-80-0-0.jpg",
+      musicName: "Night Changes",
+      musicUrl:
+          "https://cdns-preview-9.dzcdn.net/stream/c-9b7dcf93ae2e2c32ce13647f7b2f006a-5.mp3",
+      albumName: "Night Changes",
+    ),
   ];
+
+  Future getSearchResult(String searchthis) async {
+    setState(() {
+      isSearched = true;
+    });
+    print(searchthis);
+    // var response = await GetSearchResults(searchthis);
+    List response = dummyResponse['data'];
+   
+    for (var item in response) {
+      searchedResult.add(MusicModel(
+        id: item['id'],
+        albumImage: item['album']['cover_big'],
+        albumName: item['album']['title'],
+        artistimage: item['artist']['picture_big'],
+        artishName: item['artist']['name'],
+        musicName: item['title'],
+        musicUrl: item['preview'],
+      ));
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +89,6 @@ class _SubSearchPageState extends State<SubSearchPage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              
               Container(
                 decoration: BoxDecoration(
                   color: Color.fromARGB(73, 158, 158, 158),
@@ -73,9 +106,17 @@ class _SubSearchPageState extends State<SubSearchPage> {
                   ),
                 ),
               ),
-              SizedBox(width: 16,),
+              SizedBox(
+                width: 4,
+              ),
               GestureDetector(
-                onTap: () {
+                onTap: () async {
+                  print("button pressed");
+                  if (searchText.text.trim().isEmpty) {
+                    return;
+                  }
+                  getSearchResult(
+                      searchText.text.trim().replaceAll(' ', '%20'));
                   setState(() {
                     isSearched = true;
                   });
@@ -92,7 +133,6 @@ class _SubSearchPageState extends State<SubSearchPage> {
                   ),
                 ),
               ),
-              
             ],
           ),
           ((searchedResult.isEmpty) && (isSearched == false))
@@ -125,7 +165,16 @@ class _SubSearchPageState extends State<SubSearchPage> {
                         itemBuilder: (context, index) {
                           return Container(
                             padding: EdgeInsets.symmetric(vertical: 8),
-                            child: searchedResult[index],
+                            child: SontTile(
+                              id: searchedResult[index].id,
+                              albumImage: searchedResult[index].albumImage,
+                              albumName: searchedResult[index].albumName,
+                              artistImage: searchedResult[index].artistimage,
+                              artistName: searchedResult[index].artishName,
+                              duration: "00:34",
+                              songName: searchedResult[index].musicName,
+                              index: index,
+                            ),
                           );
                         },
                       ),
@@ -137,7 +186,25 @@ class _SubSearchPageState extends State<SubSearchPage> {
 }
 
 class SontTile extends StatefulWidget {
-  const SontTile({super.key});
+  String songName;
+  String artistName;
+  String albumName;
+  String albumImage;
+  String artistImage;
+  String duration;
+  int? index;
+  int id;
+  SontTile({
+    super.key,
+    required this.id,
+    required this.songName,
+    required this.albumName,
+    required this.artistName,
+    required this.albumImage,
+    required this.artistImage,
+    required this.duration,
+    this.index,
+  });
 
   @override
   State<SontTile> createState() => _SontTileState();
@@ -174,10 +241,24 @@ class _SontTileState extends State<SontTile> {
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: Colors.white, width: 4),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Color.fromARGB(218, 105, 255, 193),
+                        blurRadius: 4,
+                        offset: Offset(2, 3),
+                      ),
+                    ],
                     color: Colors.blue,
                   ),
                   height: 100,
                   width: 100,
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Image.network(
+                        widget.albumImage,
+                        fit: BoxFit.fill,
+                      )),
                 ),
               ),
               Padding(
@@ -187,7 +268,7 @@ class _SontTileState extends State<SontTile> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Night Changes',
+                      widget.songName.length > 20? widget.songName.substring(0,20) + "..." : widget.songName,
                       style: GoogleFonts.sourceSansPro(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -198,7 +279,7 @@ class _SontTileState extends State<SontTile> {
                       height: 4,
                     ),
                     Text(
-                      "One Direction",
+                      widget.artistName,
                       style: GoogleFonts.sourceSansPro(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
@@ -211,19 +292,11 @@ class _SontTileState extends State<SontTile> {
                     Row(
                       children: [
                         Text(
-                          "00:32" + "/",
+                          widget.duration,
                           style: GoogleFonts.sourceSansPro(
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
                             color: Color.fromARGB(185, 255, 255, 255),
-                          ),
-                        ),
-                        Text(
-                          "2:16",
-                          style: GoogleFonts.sourceSansPro(
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.blue,
                           ),
                         ),
                       ],

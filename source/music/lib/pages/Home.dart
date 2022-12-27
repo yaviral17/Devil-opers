@@ -6,6 +6,7 @@ import 'package:music/pages/subHomePages/Liberaries.dart';
 import 'package:music/pages/subHomePages/home.dart';
 import 'package:music/pages/subHomePages/menu.dart';
 import 'package:music/pages/subHomePages/search.dart';
+import 'package:music/providers/fetchSearchedSongList.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -102,7 +103,9 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       InkWell(
-                        onTap: () {
+                        onTap: () async {
+                          // var request = await GetSearchResults("night%20changes");
+                          // print(request);
                           setState(() {
                             isPaused = !isPaused;
                           });
