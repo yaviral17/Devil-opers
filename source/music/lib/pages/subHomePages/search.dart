@@ -33,24 +33,28 @@ class _SubSearchPageState extends State<SubSearchPage> {
   ];
 
   Future getSearchResult(String searchthis) async {
-    setState(() {
+    searchedResult.clear();
+    print(searchthis);
+    Map<String,dynamic> response = await GetSearchResults(searchthis);
+    // List response = dummyResponse['data'];
+    print(response.keys);
+    if (response['isSuccess'] == true) {
+      List data = response['data'];
+      for (var item in data) {
+        searchedResult.add(MusicModel(
+          id: item['id'],
+          albumImage: item['album']['cover_big'],
+          albumName: item['album']['title'],
+          artistimage: item['artist']['picture_big'],
+          artishName: item['artist']['name'],
+          musicName: item['title'],
+          musicUrl: item['preview'],
+        ));
+      }
+    }
+     setState(() {
       isSearched = true;
     });
-    print(searchthis);
-    // var response = await GetSearchResults(searchthis);
-    List response = dummyResponse['data'];
-   
-    for (var item in response) {
-      searchedResult.add(MusicModel(
-        id: item['id'],
-        albumImage: item['album']['cover_big'],
-        albumName: item['album']['title'],
-        artistimage: item['artist']['picture_big'],
-        artishName: item['artist']['name'],
-        musicName: item['title'],
-        musicUrl: item['preview'],
-      ));
-    }
   }
 
   @override
@@ -196,19 +200,18 @@ class SontTile extends StatefulWidget {
   String duration;
   int? index;
   int id;
-    MusicModel? model;
-  SontTile({
-    super.key,
-    required this.id,
-    required this.songName,
-    required this.albumName,
-    required this.artistName,
-    required this.albumImage,
-    required this.artistImage,
-    required this.duration,
-    this.index,
-    this.model
-  });
+  MusicModel? model;
+  SontTile(
+      {super.key,
+      required this.id,
+      required this.songName,
+      required this.albumName,
+      required this.artistName,
+      required this.albumImage,
+      required this.artistImage,
+      required this.duration,
+      this.index,
+      this.model});
 
   @override
   State<SontTile> createState() => _SontTileState();
@@ -272,7 +275,9 @@ class _SontTileState extends State<SontTile> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      widget.songName.length > 20? widget.songName.substring(0,20) + "..." : widget.songName,
+                      widget.songName.length > 20
+                          ? widget.songName.substring(0, 20) + "..."
+                          : widget.songName,
                       style: GoogleFonts.sourceSansPro(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -313,7 +318,7 @@ class _SontTileState extends State<SontTile> {
                 children: [
                   // InkWell(
                   //   onTap: () {
-                      
+
                   //   },
                   //   child: Container(
                   //       padding: EdgeInsets.all(8),
