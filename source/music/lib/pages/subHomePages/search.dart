@@ -22,11 +22,6 @@ class _SubSearchPageState extends State<SubSearchPage> {
     SontTile(),
     SontTile(),
     SontTile(),
-    SontTile(),
-    SontTile(),
-    SontTile(),
-    SontTile(),
-    SontTile(),
   ];
 
   @override
@@ -58,8 +53,9 @@ class _SubSearchPageState extends State<SubSearchPage> {
             height: 16,
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              
               Container(
                 decoration: BoxDecoration(
                   color: Color.fromARGB(73, 158, 158, 158),
@@ -77,6 +73,7 @@ class _SubSearchPageState extends State<SubSearchPage> {
                   ),
                 ),
               ),
+              SizedBox(width: 16,),
               GestureDetector(
                 onTap: () {
                   setState(() {
@@ -95,6 +92,7 @@ class _SubSearchPageState extends State<SubSearchPage> {
                   ),
                 ),
               ),
+              
             ],
           ),
           ((searchedResult.isEmpty) && (isSearched == false))
@@ -121,7 +119,7 @@ class _SubSearchPageState extends State<SubSearchPage> {
                     )
                   : Container(
                       padding: EdgeInsets.only(top: 4),
-                      height: display.height * (64 / 100),
+                      height: display.height * (74 / 100),
                       child: ListView.builder(
                         itemCount: searchedResult.length,
                         itemBuilder: (context, index) {
