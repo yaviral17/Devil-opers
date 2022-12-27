@@ -18,7 +18,7 @@ void main() async {
     debugShowCheckedModeBanner: false,
     home: Scaffold(
       backgroundColor: Color.fromARGB(255, 217, 222, 231),
-      body: MusicPlayPage(),
+      body: HomePage(),
     ),
   ));
 }

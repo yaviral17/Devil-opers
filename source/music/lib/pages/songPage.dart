@@ -4,7 +4,10 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
+import 'package:music/constrans/songQueue.dart';
 import 'package:music/constrans/urls.dart';
+import 'package:music/constrans/utils.dart';
+import 'package:music/pages/Home.dart';
 
 class MusicPlayPage extends StatefulWidget {
   const MusicPlayPage({super.key});
@@ -15,13 +18,8 @@ class MusicPlayPage extends StatefulWidget {
 
 class MusicPlayPageState extends State<MusicPlayPage> {
   bool isLiked = false;
-  String currentMusic =
-      "https://cdns-preview-9.dzcdn.net/stream/c-9b7dcf93ae2e2c32ce13647f7b2f006a-5.mp3";
-  AudioPlayer audioPlayer = AudioPlayer();
-  Duration audioDuration = Duration();
-  Duration audioPosition = Duration();
-  bool playing = false;
-  int repeat = 0;
+  // String currentMusic =
+  //     "https://cdns-preview-9.dzcdn.net/stream/c-9b7dcf93ae2e2c32ce13647f7b2f006a-5.mp3";
 
   // void getAudio(String url) async {
   //   int result = await audioPlayer.pause();
@@ -71,7 +69,24 @@ class MusicPlayPageState extends State<MusicPlayPage> {
             Row(
               children: [
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    // Navigator.of(context).pushAndRemoveUntil(
+                    //     PageRouteBuilder(
+                    //       pageBuilder:
+                    //           (context, animation, secondaryAnimation) =>
+                    //               const HomePage(),
+                    //       transitionsBuilder:
+                    //           (context, animation, secondaryAnimation, child) {
+                    //         const begin = Offset(0.0, 1.0);
+                    //         const end = Offset.zero;
+                    //         final tween = Tween(begin: begin, end: end);
+                    //         final offsetAnimation = animation.drive(tween);
+                    //         return child;
+                    //       },
+                    //     ),
+                    //     (route) => false);
+                    Navigator.of(context).pop();
+                  },
                   child: Container(
                     padding: EdgeInsets.all(8),
                     child: Icon(
@@ -194,10 +209,22 @@ class MusicPlayPageState extends State<MusicPlayPage> {
                 SizedBox(
                   width: 16,
                 ),
-                Icon(
-                  Icons.skip_previous_rounded,
-                  color: Colors.white,
-                  size: 48,
+                GestureDetector(
+                  onTap: () async {
+                    if (currentMusic != 00) {
+                      currentMusic--;
+                      await audioPlayer
+                          .play(currentQueue[currentMusic].musicUrl);
+                      setState(() {
+                        playing = true;
+                      });
+                    }
+                  },
+                  child: Icon(
+                    Icons.skip_previous_rounded,
+                    color: Colors.white,
+                    size: 48,
+                  ),
                 ),
                 SizedBox(
                   width: 16,
@@ -209,13 +236,13 @@ class MusicPlayPageState extends State<MusicPlayPage> {
                       setState(() {
                         playing = false;
                       });
-                      return;
+                      // return;
+                    } else {
+                      await audioPlayer.play(currentQueue[currentMusic].musicUrl);
+                      setState(() {
+                        playing = true;
+                      });
                     }
-
-                    await audioPlayer.play(currentMusic);
-                    setState(() {
-                      playing = true;
-                    });
                     //  getAudio("https://cdns-preview-9.dzcdn.net/stream/c-9b7dcf93ae2e2c32ce13647f7b2f006a-5.mp3");
                     // if(playing)
                     // setState(() {
@@ -231,10 +258,22 @@ class MusicPlayPageState extends State<MusicPlayPage> {
                 SizedBox(
                   width: 16,
                 ),
-                Icon(
-                  Icons.skip_next_rounded,
-                  color: Colors.white,
-                  size: 48,
+                GestureDetector(
+                  onTap: () async {
+                    if (currentMusic != currentQueue.length - 1) {
+                      currentMusic++;
+                      await audioPlayer
+                          .play(currentQueue[currentMusic].musicUrl);
+                      setState(() {
+                        playing = true;
+                      });
+                    }
+                  },
+                  child: Icon(
+                    Icons.skip_next_rounded,
+                    color: Colors.white,
+                    size: 48,
+                  ),
                 ),
                 SizedBox(
                   width: 16,
@@ -281,6 +320,11 @@ class MusicPlayPageState extends State<MusicPlayPage> {
       activeColor: Color.fromARGB(255, 128, 198, 255),
       inactiveColor: Colors.white,
       min: 0.0,
+      onChangeEnd: (value) {
+        setState(() {
+          playing = false;
+        });
+      },
       value: audioPosition.inSeconds.toDouble(),
       max: audioDuration.inSeconds.toDouble(),
       onChanged: (value) {

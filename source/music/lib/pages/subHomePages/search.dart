@@ -2,6 +2,7 @@ import "package:flutter/material.dart";
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:music/constrans/music_model.dart';
+import 'package:music/constrans/songQueue.dart';
 import 'package:music/constrans/urls.dart';
 import 'package:music/constrans/utils.dart';
 import 'package:music/providers/fetchSearchedSongList.dart';
@@ -174,6 +175,7 @@ class _SubSearchPageState extends State<SubSearchPage> {
                               duration: "00:34",
                               songName: searchedResult[index].musicName,
                               index: index,
+                              model: searchedResult[index],
                             ),
                           );
                         },
@@ -193,7 +195,8 @@ class SontTile extends StatefulWidget {
   String artistImage;
   String duration;
   int? index;
-  int id;
+  String id;
+    MusicModel? model;
   SontTile({
     super.key,
     required this.id,
@@ -204,6 +207,7 @@ class SontTile extends StatefulWidget {
     required this.artistImage,
     required this.duration,
     this.index,
+    this.model
   });
 
   @override
@@ -307,29 +311,36 @@ class _SontTileState extends State<SontTile> {
               Spacer(),
               Column(
                 children: [
-                  InkWell(
-                    onTap: () {},
-                    child: Container(
-                        padding: EdgeInsets.all(8),
-                        child: Icon(
-                          Icons.more_horiz,
-                          color: Colors.white,
-                        )),
-                  ),
+                  // InkWell(
+                  //   onTap: () {
+                      
+                  //   },
+                  //   child: Container(
+                  //       padding: EdgeInsets.all(8),
+                  //       child: Icon(
+                  //         Icons.queue_music,
+                  //         color: Colors.white,
+                  //       )),
+                  // ),
                   Spacer(),
-                  SizedBox(
-                    width: 60,
-                    height: 60,
-                    child: Stack(children: [
-                      Lottie.network(
-                          'https://assets6.lottiefiles.com/packages/lf20_5gdcuanx.json'),
-                      Center(
-                          child: Icon(
-                        Icons.play_arrow,
-                        color: Colors.white,
-                        size: 28,
-                      )),
-                    ]),
+                  GestureDetector(
+                    onTap: () {
+                      currentQueue.add(widget.model);
+                    },
+                    child: SizedBox(
+                      width: 60,
+                      height: 60,
+                      child: Stack(children: [
+                        Lottie.network(
+                            'https://assets6.lottiefiles.com/packages/lf20_5gdcuanx.json'),
+                        Center(
+                            child: Icon(
+                          Icons.play_arrow,
+                          color: Colors.white,
+                          size: 28,
+                        )),
+                      ]),
+                    ),
                   ),
                 ],
               ),

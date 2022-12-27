@@ -2,6 +2,9 @@ import 'package:flutter/gestures.dart';
 import "package:flutter/material.dart";
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
+import 'package:music/constrans/songQueue.dart';
+import 'package:music/constrans/utils.dart';
+import 'package:music/pages/songPage.dart';
 import 'package:music/pages/subHomePages/Liberaries.dart';
 import 'package:music/pages/subHomePages/home.dart';
 import 'package:music/pages/subHomePages/menu.dart';
@@ -17,7 +20,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int selectedNavIcon = 1;
-  bool isPaused = true;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +36,7 @@ class _HomePageState extends State<HomePage> {
                   fit: BoxFit.fill),
             ),
             //Sub Pages Here - Start
-    
+
             selectedNavIcon == 1
                 ? SubHomeScreen()
                 : selectedNavIcon == 2
@@ -42,7 +44,7 @@ class _HomePageState extends State<HomePage> {
                     : selectedNavIcon == 3
                         ? SubLiberariesPage()
                         : SubMenuPage(),
-    
+
             //Sub Pages Here - End
             Column(
               children: [
@@ -54,15 +56,47 @@ class _HomePageState extends State<HomePage> {
                   child: Row(
                     children: [
                       SizedBox(
-                        width: 20,
+                        width: 4,
+                      ),
+                      GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).push(
+                              PageRouteBuilder(
+                                pageBuilder:
+                                    (context, animation, secondaryAnimation) =>
+                                        const MusicPlayPage(),
+                                transitionsBuilder: (context, animation,
+                                    secondaryAnimation, child) {
+                                  const begin = Offset(0.0, 1.0);
+                                  const end = Offset.zero;
+                                  final tween = Tween(begin: begin, end: end);
+                                  final offsetAnimation =
+                                      animation.drive(tween);
+                                  return child;
+                                },
+                              ),
+                            );
+                          },
+                          child: Icon(
+                            Icons.keyboard_arrow_up_sharp,
+                            color: Color.fromARGB(212, 0, 0, 0),
+                            size: 36,
+                          )),
+                      SizedBox(
+                        width: 4,
                       ),
                       Container(
                         width: 48,
                         height: 48,
                         alignment: Alignment.centerLeft,
                         decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(4),
+                            color: Colors.white,
+                            border: Border.all(color: Colors.white, width: 4)),
+                        child: ClipRRect(
                           borderRadius: BorderRadius.circular(4),
-                          color: Colors.white,
+                          child: Image.network(
+                              currentQueue[currentMusic].artistimage),
                         ),
                       ),
                       SizedBox(
@@ -73,7 +107,7 @@ class _HomePageState extends State<HomePage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Song Name',
+                            currentQueue[currentMusic].musicName,
                             style: GoogleFonts.sourceSansPro(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
@@ -84,7 +118,7 @@ class _HomePageState extends State<HomePage> {
                             height: 4,
                           ),
                           Text(
-                            'Singer',
+                            currentQueue[currentMusic].artishName,
                             style: GoogleFonts.firaSans(
                                 fontSize: 12,
                                 fontWeight: FontWeight.bold,
@@ -93,7 +127,30 @@ class _HomePageState extends State<HomePage> {
                         ],
                       ),
                       Spacer(),
-                      InkWell(
+                      GestureDetector(
+                        onTap: () async {
+                          // if (currentMusic == 0) {
+                          //   showSnackBar(
+                          //       "No previous song avilable in queue!", context);
+                          //   return;
+                          // }
+                          // currentMusic--;
+                          // if (await audioDuration.inSeconds > 0) {
+                          //   await audioPlayer.resume();
+                          // } else {
+                          //   await audioPlayer.play(currentQueue[currentMusic]);
+                          // }
+                          // setState(() {
+                          //   playing = true;
+                          // });
+                          if(currentMusic != 0){
+                            currentMusic --;
+                            await audioPlayer.play(currentQueue[currentMusic].musicUrl);
+                             setState(() {
+                              playing = true;
+                            });
+                          }
+                        },
                         child: Container(
                           padding: EdgeInsets.all(4),
                           child: Icon(
@@ -102,23 +159,41 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                       ),
-                      InkWell(
+                      GestureDetector(
                         onTap: () async {
                           // var request = await GetSearchResults("night%20changes");
                           // print(request);
-                          setState(() {
-                            isPaused = !isPaused;
-                          });
+                          if(!playing){
+                           await audioPlayer.play(currentQueue[currentMusic].musicUrl);
+                            setState(() {
+                              playing = true;
+                            });
+                          }else{
+                           await audioPlayer.pause();
+                            setState(() {
+                              playing = false;
+                            });
+                          }
+
                         },
                         child: Container(
                           padding: EdgeInsets.all(4),
                           child: Icon(
-                            isPaused ? Icons.pause : Icons.play_arrow,
+                            playing ? Icons.pause : Icons.play_arrow,
                             size: 32,
                           ),
                         ),
                       ),
-                      InkWell(
+                      GestureDetector(
+                        onTap: () async {
+                         if(currentMusic != currentQueue.length-1){
+                            currentMusic++;
+                            await audioPlayer.play(currentQueue[currentMusic].musicUrl);
+                            setState(() {
+                              playing = true;
+                            });
+                         }
+                        },
                         child: Container(
                           padding: EdgeInsets.all(4),
                           child: Icon(
@@ -143,7 +218,7 @@ class _HomePageState extends State<HomePage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      InkWell(
+                      GestureDetector(
                         onTap: () {
                           setState(() {
                             selectedNavIcon = 1;
@@ -161,7 +236,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                       ),
-                      InkWell(
+                      GestureDetector(
                         onTap: () {
                           setState(() {
                             selectedNavIcon = 2;
@@ -179,7 +254,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                       ),
-                      InkWell(
+                      GestureDetector(
                         onTap: () {
                           setState(() {
                             selectedNavIcon = 3;
@@ -197,7 +272,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                       ),
-                      InkWell(
+                      GestureDetector(
                         onTap: () {
                           setState(() {
                             selectedNavIcon = 4;
