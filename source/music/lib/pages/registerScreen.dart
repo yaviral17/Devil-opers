@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:music/constrans/imageStrings.dart';
 import 'package:music/constrans/properties.dart';
+import 'package:music/pages/Home.dart';
 import 'package:music/pages/loginScreen.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -21,7 +22,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
     TextEditingController Upass = TextEditingController();
     TextEditingController UcPass = TextEditingController();
 
-    Future submitButton() async {}
 
     return Material(
       child: Container(
@@ -236,7 +236,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 height: 24,
               ),
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                   Navigator.push(context, MaterialPageRoute(builder: (context) => const loginScreen_(),));
+                },
                 child: roundedEdgeButton(
                     lableText: 'Submit',
                     buttonHeight: 48,

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:music/constrans/imageStrings.dart';
 import 'package:music/constrans/properties.dart';
+import 'package:music/pages/Home.dart';
 import 'package:music/pages/registerScreen.dart';
 
 class loginScreen_ extends StatefulWidget {
@@ -131,7 +132,9 @@ class _loginScreen_State extends State<loginScreen_> {
                         height:16,
                       ),
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => const HomePage(),));
+                        },
                         child: roundedEdgeButton(
                           buttonHeight: 48,
                           buttonWidth: display.width > 500? 300 :display.width * (60 / 100),
@@ -181,7 +184,9 @@ class _loginScreen_State extends State<loginScreen_> {
                   children: [
                     const Text("Don't have an account ?"),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                         Navigator.push(context, MaterialPageRoute(builder: (context) => const RegisterScreen(),));
+                      },
                       child: TextButton(
                         onPressed: () {
                           Navigator.push(
