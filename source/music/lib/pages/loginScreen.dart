@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:music/constrans/imageStrings.dart';
 import 'package:music/constrans/properties.dart';
+import 'package:music/constrans/utils.dart';
 import 'package:music/pages/Home.dart';
 import 'package:music/pages/registerScreen.dart';
+import 'package:music/providers/fbaseAuth.dart';
 
 class loginScreen_ extends StatefulWidget {
   const loginScreen_({super.key});
@@ -128,16 +130,30 @@ class _loginScreen_State extends State<loginScreen_> {
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 16,
                       ),
                       GestureDetector(
-                        onTap: () {
-                          Navigator.push(
+                        onTap: () async {
+                          if(username.text.trim().isEmpty){
+                            showSnackBar("Enter your Email address !", context);
+                            return;
+                          }
+                          if(password.text.trim().isEmpty){
+                            showSnackBar("Enter your Password !", context);
+                            return;
+                          }
+                          var isLogin = await UserLogin(username.text.trim(),
+                              password.text.trim(), context);
+                          if (isLogin) {
+                            // ignore: use_build_context_synchronously
+                            Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => const HomePage(),
-                              ));
+                              ),
+                            );
+                          }
                         },
                         child: roundedEdgeButton(
                           buttonHeight: 48,
@@ -183,7 +199,7 @@ class _loginScreen_State extends State<loginScreen_> {
                   ],
                 ),
                 SizedBox(
-                  height: display.height * (5 / 100),
+                  height: 16,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
