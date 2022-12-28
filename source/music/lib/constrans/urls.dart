@@ -9,10 +9,10 @@ const Map<String,String> APIheader2 = {
 };
 
 
-// const Map<String,String> APIheaderReserved = {
-//    'X-RapidAPI-Key': '9f3be0f54emshf7159176465f079p1bfbe4jsnd260af9bc6c3',
-//     'X-RapidAPI-Host': 'deezerdevs-deezer.p.rapidapi.com'
-// };
+const Map<String,String> APIheaderReserved = {
+   'X-RapidAPI-Key': '9f3be0f54emshf7159176465f079p1bfbe4jsnd260af9bc6c3',
+    'X-RapidAPI-Host': 'deezerdevs-deezer.p.rapidapi.com'
+};
 
 Map<String,dynamic> dummyResponse = {
   'isSuccess':true,

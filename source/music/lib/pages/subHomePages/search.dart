@@ -1,4 +1,3 @@
-
 import "package:flutter/material.dart";
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
@@ -37,8 +36,8 @@ class _SubSearchPageState extends State<SubSearchPage> {
   Future getSearchResult(String searchthis) async {
     searchedResult.clear();
     print(searchthis);
-    // Map<String,dynamic> response = await GetSearchResults(searchthis);
-    Map<String, dynamic> response = dummyResponse;
+    Map<String, dynamic> response = await GetSearchResults(searchthis);
+    // Map<String, dynamic> response = dummyResponse;
     // print(response.keys);
     if (response['isSuccess'] == true) {
       List data = response['data'];
@@ -338,8 +337,11 @@ class _SontTileState extends State<SontTile> {
                                           children: [
                                             GestureDetector(
                                               onTap: () {
-                                                userPlaylists[index].addSong(widget.model);
-                                                showSnackBar("Song added to ${userPlaylists[index].title}", context);
+                                                userPlaylists[index]
+                                                    .addSong(widget.model);
+                                                showSnackBar(
+                                                    "Song added to ${userPlaylists[index].title}",
+                                                    context);
                                                 // Navigator.of(context).pop();
                                               },
                                               child: Container(
@@ -347,7 +349,8 @@ class _SontTileState extends State<SontTile> {
                                                 child: Text(
                                                   userPlaylists[index].title,
                                                   // "hi ther afad f adfe",
-                                                  style: TextStyle(fontSize: 24),
+                                                  style:
+                                                      TextStyle(fontSize: 24),
                                                 ),
                                               ),
                                             ),
@@ -428,17 +431,16 @@ class _SontTileState extends State<SontTile> {
                                                                       1]
                                                               .addSong(
                                                                   widget.model);
-                                                                  Navigator.of(context).pop();
+                                                          Navigator.of(context)
+                                                              .pop();
                                                         },
                                                         child: Text("Add")),
                                                   ],
-
                                                 )
                                               ],
                                             );
                                           },
                                         );
-                                    
                                       },
                                       child: Text("Create new"),
                                     ),

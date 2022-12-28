@@ -5,7 +5,7 @@ import 'package:music/constrans/urls.dart';
 
 
 Future GetSearchResults(String searchThis) async{
-  var headers = APIheader2;
+  var headers = APIheaderReserved;
   var request = http.Request('GET', Uri.parse(searchingUrl+searchThis));
   request.headers.addAll(headers);
   http.StreamedResponse response = await request.send();
